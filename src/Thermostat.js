@@ -9,6 +9,7 @@ class Thermostat {
   }
 
   down(n) {
+    if ((this.temp - n) < 10) throw Error("10 is the minimum temp");
     this.temp -= n
   }
 

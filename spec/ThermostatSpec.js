@@ -22,6 +22,13 @@ describe ('Thermostat', function() {
       thermostat.down(1);
       expect(thermostat.temp).toEqual(19);
     })
+
+    it('will throw an error if we try to decrease temp below 10', function () {
+      thermostat = new Thermostat();
+      thermostat.down(10);
+      expect (function () {thermostat.down(1);}).toThrow(Error('10 is the minimum temp'))
+    })
+
   })
 
 });
