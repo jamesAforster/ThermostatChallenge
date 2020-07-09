@@ -27,4 +27,22 @@ class Thermostat {
       this.max = 25
     }
   }
+
+  reset() {
+    this.temp = 20
+  }
+
+  usage () {
+    function between(x, min, max) {
+      return x >= min && x <= max;
+    }
+
+    if (between(this.temp, 0, 17)) {
+      return "low-usage"
+    } else if (between(this.temp, 18, 25)) {
+      return "medium-usage"
+    } else {
+      return "high-usage"
+    }
+  }
 }

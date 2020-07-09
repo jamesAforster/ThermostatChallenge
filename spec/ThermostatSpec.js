@@ -31,8 +31,9 @@ describe ('Thermostat', function() {
   })
 
   describe('powerMode', function() {
-    it('be turned on when thermostat is created', function () {
+    it('will be turned on by default when thermostat is created', function () {
       thermostat = new Thermostat();
+      expect(thermostat.powersaving).toEqual(true)
       expect (function () {thermostat.up(20);}).toThrow(Error('25 is the maximum temp'))
     });
 
@@ -43,4 +44,36 @@ describe ('Thermostat', function() {
       expect (function () {thermostat.up(20);}).toThrow(Error('32 is the maximum temp'))
     });
   });
+
+  describe('reset', function () {
+    it('will reset the temperature to 20 when called', function () {
+      thermostat = new Thermostat();
+      thermostat.up(3);
+      thermostat.reset();
+      expect(thermostat.temp).toEqual(20)
+    })
+  })
+
+  describe('usage', function () {
+    it('defines low usage correctly', function () {
+      thermostat = new Thermostat();
+      thermostat.down(5);
+      expect(thermostat.usage()).toEqual("low-usage")
+    })
+
+    it('defines medium usage correctly', function () {
+      thermostat = new Thermostat();
+      expect(thermostat.usage()).toEqual("medium-usage")
+    })
+
+    it('defines high usage correctly', function () {
+      thermostat = new Thermostat();
+      thermostat.powerMode();
+      thermostat.up(10);
+      expect(thermostat.usage()).toEqual("high-usage")
+    })
+
+  })
 });
+
+// < 18 is low-usage, <= 25 is medium-usage, anything else is high-usage.
