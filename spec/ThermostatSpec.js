@@ -1,8 +1,11 @@
 describe ('Thermostat', function() {
 
+  beforeEach(function() {
+    thermostat = new Thermostat();
+  });
+
   describe('temp', function() {
     it('Is created with a temperature of 20', function() {
-      thermostat = new Thermostat();
       expect(thermostat.temp).toEqual(20);
     });
 
@@ -10,7 +13,6 @@ describe ('Thermostat', function() {
 
   describe('up', function() {
     it('will increase the temp by the argument passed', function () {
-      thermostat = new Thermostat();
       thermostat.up(1);
       expect(thermostat.temp).toEqual(21);
     })
@@ -18,13 +20,11 @@ describe ('Thermostat', function() {
 
   describe('down', function() {
     it('will decrease the temp by the argument passed', function () {
-      thermostat = new Thermostat();
       thermostat.down(1);
       expect(thermostat.temp).toEqual(19);
     })
 
     it('will throw an error if we try to decrease temp below 10', function () {
-      thermostat = new Thermostat();
       thermostat.down(10);
       expect (function () {thermostat.down(1);}).toThrow(Error('10 is the minimum temp'))
     })
@@ -38,7 +38,6 @@ describe ('Thermostat', function() {
     });
 
     it('can be turned off and effect the max temp', function () {
-      thermostat = new Thermostat();
       thermostat.powerMode();
       expect(thermostat.powersaving).toEqual(false)
       expect (function () {thermostat.up(20);}).toThrow(Error('32 is the maximum temp'))
@@ -47,7 +46,6 @@ describe ('Thermostat', function() {
 
   describe('reset', function () {
     it('will reset the temperature to 20 when called', function () {
-      thermostat = new Thermostat();
       thermostat.up(3);
       thermostat.reset();
       expect(thermostat.temp).toEqual(20)
@@ -56,18 +54,15 @@ describe ('Thermostat', function() {
 
   describe('usage', function () {
     it('defines low usage correctly', function () {
-      thermostat = new Thermostat();
       thermostat.down(5);
       expect(thermostat.usage()).toEqual("low-usage")
     })
 
     it('defines medium usage correctly', function () {
-      thermostat = new Thermostat();
       expect(thermostat.usage()).toEqual("medium-usage")
     })
 
     it('defines high usage correctly', function () {
-      thermostat = new Thermostat();
       thermostat.powerMode();
       thermostat.up(10);
       expect(thermostat.usage()).toEqual("high-usage")
@@ -75,5 +70,3 @@ describe ('Thermostat', function() {
 
   })
 });
-
-// < 18 is low-usage, <= 25 is medium-usage, anything else is high-usage.
